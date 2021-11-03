@@ -1,6 +1,21 @@
 class Solution {
 public:
+  /*
+  Recursive solution
+  --Time Complexity - O(2^n)
+  --Space Complexity - O(1)
   
+  Memoization
+  --Time Complexity - O(n^2)
+  --Space Complexity - O(n^2)
+  
+  Dynamic Porgramming
+  --Time Complexity - O(n^2)
+  --Space Complexity - O(n^2)
+  
+  */
+    
+//Memoization and Recursion solutions    
 /* int helper(string text1 , string text2 , int i , int j , int **arr){
      if (i == text1.size() || j == text2.size()) {
 		return 0;
@@ -34,6 +49,7 @@ int longestCommonSubsequence(string text1, string text2) {
          }
      }*/
     
+    //Dynamic Programming Solutions
     int n = text1.size();
     int m = text2.size();
     
