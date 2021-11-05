@@ -1,32 +1,7 @@
 class Solution {
 public:
-    /*string longestCommonPrefix(vector<string>& strs) {
-        
-     
-        string s = "";
-        
-        if(strs.size() == 0){
-            return s;
-        }
-        
-        for(int i =  0 ; i < strs[0].size() && strs[0].size() > 0 ; i++){
-            
-               char sr = strs[0][i];
-              
-            for(int j = 1 ; j < strs.size() ; j++){
-                
-                  if(sr != strs[j][i] || strs[j].size() < 0){
-                    
-                      return s;
-                  }
-            }
-            
-            s =  s + sr;
-        }
-        
-        return s;
-    }*/
-    
+   
+    // -- Time Complexity :: O(max(string)*min(string))
     string longestCommonPrefix(vector<string>&strs) {
 
 	if (strs.size() == 0)return "";
@@ -52,4 +27,38 @@ public:
 	}
 	return s;
 }
+    
+    /*
+    // -- Time Complexity is O(nlog(n))
+    string longestCommonPrefix(vector<string>& str) {
+        int n = str.size();
+        if(n==0) return "";
+        
+        string ans  = "";
+        sort(begin(str), end(str));
+        string a = str[0];
+        string b = str[n-1];
+        
+        for(int i=0; i<a.size(); i++){
+            if(a[i]==b[i]){
+                ans = ans + a[i];
+            }
+            else{
+                break;
+            }
+        }
+        
+        return ans;
+        
+    }
+    */
+     
+    /*
+     Approach Third : 
+     -- we can find maximum string in O(n) time
+     -- we can find minimum string in O(n) time
+     -- We can compare the max and min string in O(n) time
+     
+     so this can be done in O(n) time as a whole
+    */
 };
