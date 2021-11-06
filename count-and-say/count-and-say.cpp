@@ -1,5 +1,8 @@
 class Solution {
 public:
+      /*
+     you perform n steps and on each step you iterate over the length of the current string at that step which is also increasing per step. This is order O(n*m) where m is the length of the string at step n
+     */
     string countAndSay(int n) {
      
          vector<string>v(n+1);
