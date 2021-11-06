@@ -1,6 +1,10 @@
 #include <cstdlib>
 #include <iostream>
 using namespace std;
+
+// -- Time Complexity is O(max(m , n))
+// -- Space Complexity is O(1)
+
 class Solution {
 public:
     int compareVersion(string version1, string version2) {
