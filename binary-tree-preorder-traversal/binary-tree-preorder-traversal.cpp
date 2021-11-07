@@ -12,24 +12,27 @@
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        
-         vector<int>ans;
+     
+        vector<int>ans;
         if(root == NULL){
             return ans;
         }
-         stack<TreeNode*>s;
-          
-         s.push(root);
+        
+        stack<TreeNode*>s;
+        s.push(root);
         
         while(s.size() != 0){
             
-             TreeNode*top = s.top();
+            TreeNode*x = s.top();
             s.pop();
-             if(top->right!=NULL)s.push(top->right);
-             if(top->left!=NULL)s.push(top->left);
+            cout<<x->val<<" ";
+            ans.push_back(x->val);
             
-             ans.push_back(top->val);
+            if(x->right)s.push(x->right);
+            
+            if(x->left)s.push(x->left);
         }
+        
         return ans;
     }
 };
