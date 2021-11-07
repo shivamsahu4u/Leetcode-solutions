@@ -12,7 +12,37 @@
 class Solution {
 public:
     
-    pair<int , int> helper(TreeNode* root){
+    //Brute Force Approach
+    //Time Complexity - O(n2)
+    //Space Complexity - O(1)
+    
+    //On each diameter call , we are saying for height , so at every call n work is done.
+    //so for n calls , n work in each leads to O(n2)
+     int height(TreeNode* root){
+         
+         if(root == NULL){
+             return 0;
+         }
+         return max(height(root->left) , height(root->right)) + 1;
+     }
+     int diameterOfBinaryTree(TreeNode* root) {
+      
+          if(root == NULL){
+              return 0;
+          }
+         
+         int ld = diameterOfBinaryTree(root->left);
+         int rd = diameterOfBinaryTree(root->right);
+         
+         int h = height(root->left)+ height(root->right);
+         
+         return max(ld , max(rd , h));
+     }
+    
+    //Efficient Approach 
+    //Time Complexity -- O(n)
+    //Space Complexity -- O(1)
+   /* pair<int , int> helper(TreeNode* root){
         
         if(root == NULL){
             pair<int, int>ans;
@@ -25,7 +55,7 @@ public:
         
          pair<int ,int>ans2 = helper(root->right);
         
-         int height = ans1.second +  ans2.second + 1;
+         int height = ans1.second +  ans2.second ;
         
          pair<int ,int>ans;
         
@@ -45,6 +75,6 @@ public:
              return 0;
          }
         
-         return helper(root).first-1;
-    }
+         return helper(root).first;
+    }*/
 };
