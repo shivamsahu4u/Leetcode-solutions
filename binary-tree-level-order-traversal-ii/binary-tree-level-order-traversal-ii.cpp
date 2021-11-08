@@ -11,9 +11,34 @@
  */
 class Solution {
 public:
+    
+    void helper(TreeNode*root , int level , vector<vector<int>>&ans){
+        
+         if(root == NULL){
+             return;
+         }
+        
+        //level is now there , then create a level
+        if(level == ans.size()){
+            vector<int>v;
+            ans.push_back(v);
+        }
+        
+        ans[level].push_back(root->val);
+        
+        helper(root->left , level + 1 , ans);
+        helper(root->right , level + 1 ,ans);
+        
+    }
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
  
          vector<vector<int>>ans;
+        
+         helper(root , 0 ,  ans);
+        
+        reverse(ans.begin() , ans.end());
+        return ans;
+         /*vector<vector<int>>ans;
          if(root == NULL){
              return ans;
          }
@@ -52,6 +77,6 @@ public:
             }
         }
         reverse(ans.begin() ,ans.end());
-        return ans;
+        return ans;*/
     }
 };
