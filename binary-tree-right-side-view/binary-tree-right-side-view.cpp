@@ -11,13 +11,36 @@
  */
 class Solution {
 public:
+    
+    //Time complexity is O(n) because we will traverse to each node in worst case
+    //Space complexity is O(1) + O(n) required space
+    //more optimised
+    void helper(TreeNode*root , int level , vector<int>&ans){
+        
+        if(root == NULL){
+            return;
+        }
+        
+        if(ans.size() < level){
+            ans.push_back(root->val);
+        }
+        
+        helper(root->right , level + 1 , ans);
+        helper(root->left , level + 1 ,ans);
+    }
     vector<int> rightSideView(TreeNode* root) {
      
+        
+         vector<int>ans;
+        
+         helper(root , 1 , ans);
+        
+        return ans;
          //first method is through level order traversal
          // Time Complexity is O(n)
-        //Space Complexity is O(n)(we are using queue here)
+        //Space Complexity is O(h)(we are using queue here)
         
-        vector<int>ans;
+        /*vector<int>ans;
         if(root == NULL){
             return ans;
         }
@@ -53,6 +76,6 @@ public:
                 }
             }
         }
-        return ans;
+        return ans;*/
     }
 };
