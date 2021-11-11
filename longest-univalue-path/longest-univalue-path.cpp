@@ -47,7 +47,6 @@ public:
             len1 = ans1.first + 1;
             len2 = ans2.first;
             ans.first = max(len1 , len2);
-            ans.second = ans.first == len1?ans1.second : ans2.second;
             s = max(s , ans.first);
             ans.first = ans1.first + 1;
             ans.second = ans1.second;
@@ -56,7 +55,6 @@ public:
             len1 = ans1.first;
             len2 = ans2.first + 1;
             ans.first = max(len1 , len2);
-            ans.second = ans.first == len1?ans1.second : ans2.second;
             s = max(s , ans.first);
             ans.first = ans2.first + 1;
             ans.second = ans2.second;
@@ -66,14 +64,6 @@ public:
             len2 = ans2.first;
             int len3 = 1;
             ans.first = max(len3 , max(len1 , len2));
-            
-            if(ans.first == len3){
-                ans.second =root->val;
-            }else if(ans.first == len2){
-                ans.second = ans2.second;
-            }else{
-                ans.second = ans1.second;
-            }
             s = max(s , ans.first);
             ans.first = 1;
             ans.second = root->val;
