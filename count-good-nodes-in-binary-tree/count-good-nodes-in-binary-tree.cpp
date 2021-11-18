@@ -14,6 +14,8 @@ public:
     
     //good node : if from a path to that node, there are no node greater than that node
     
+    //Time Complexity - O(n)
+    //Space Complexity - O(n) (skewed trees)
     int helper(TreeNode* root ,TreeNode* parent){
         if(root == NULL){
             return 0;
