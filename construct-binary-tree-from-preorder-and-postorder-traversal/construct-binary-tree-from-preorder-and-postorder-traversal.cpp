@@ -11,7 +11,10 @@
  */
 class Solution {
 public:
-    
+    /*
+        Time O(N), as we iterate both pre index and post index only once.
+        Space O(height), depending on the height of constructed tree.
+    */
     int preindex = 0 , postindex = 0;
     TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
         
