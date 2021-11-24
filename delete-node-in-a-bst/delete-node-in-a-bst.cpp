@@ -11,7 +11,50 @@
  */
 class Solution {
 public:
-    TreeNode* deleteNode(TreeNode* root, int key) {
+    
+     TreeNode* deleteNode(TreeNode* root, int key) {
+       
+          if(root == NULL){
+              return NULL;
+          }
+         
+         if(root->left == NULL && root->right == NULL && root->val == key){
+             return NULL;
+         }
+         if(key < root->val){
+             root->left = deleteNode(root->left , key);
+             return root;
+         }else if(key > root->val){
+             root->right = deleteNode(root->right , key);
+             return root;
+         }else{
+             //root is the value of key
+             
+             if(root->left == NULL){
+                 return root->right;
+             }else if(root->right == NULL){
+                 return root->left;
+             }
+             TreeNode*parent = root;
+             TreeNode*curr = root->right;
+             
+             while(curr->left!=NULL){
+                 parent = curr;
+                 curr = curr->left;
+             }
+             
+             if(parent == root){
+                 parent->right = curr->right;
+             }else{
+                 parent->left =  curr->right;
+             }
+             
+             root->val = curr->val;
+             delete curr;
+             return root;
+         }
+     }
+   /* TreeNode* deleteNode(TreeNode* root, int key) {
         
          if(root == NULL){
              return root;
@@ -34,7 +77,7 @@ public:
                 temp = temp->left;
             }
             
-           swap(root->val , temp->val);
+            swap(root->val , temp->val);
             
             root->right = deleteNode(root->right , temp->val);
             
@@ -43,5 +86,5 @@ public:
         }else{
             return root;
         }
-    }
+    }*/
 };
