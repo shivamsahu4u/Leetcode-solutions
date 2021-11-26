@@ -11,6 +11,35 @@
  */
 class Solution {
 public:
+    
+    // Saf Suthra Solution
+    int ans;
+    void DFS(TreeNode* current , TreeNode* parent , TreeNode* grand){
+        
+         if(current == NULL){
+             return;
+         }
+        
+        if(grand != NULL && grand->val % 2 == 0){
+            ans = ans + current->val;
+        }
+        
+        DFS(current->left , current , parent);
+        DFS(current->right , current , parent);
+        
+        
+        
+    }
+    int sumEvenGrandparent(TreeNode* root) {
+        
+         DFS(root , NULL , NULL);
+        return ans;
+    }
+};
+
+
+/*
+ //O(n) - Time O(n) - sPACE
     int count = 0;
     void helper(TreeNode* root){
         
@@ -53,4 +82,4 @@ public:
         
         return count;
     }
-};
+*/
