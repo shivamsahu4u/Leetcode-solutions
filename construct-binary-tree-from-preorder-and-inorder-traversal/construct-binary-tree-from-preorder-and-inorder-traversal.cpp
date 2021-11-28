@@ -12,7 +12,41 @@
 class Solution {
 public:
     
-    TreeNode* helper(vector<int>& preorder ,int pi , int pl ,  vector<int>&inorder , int ii , int jl){
+   int p = 0;
+     TreeNode* helper(vector<int>& preorder  ,int s , int e ,unordered_map<int , int>&hash){
+          
+          if(s > e){
+              return NULL;
+          }
+         
+         TreeNode* root = new TreeNode(preorder[p]);
+         p++;
+         int index = hash[root->val];
+         
+         root->left = helper(preorder,  s , index - 1 , hash);
+         root->right = helper(preorder ,  index +1 , e , hash);
+         
+         return root;
+      
+     }
+    
+    TreeNode* subhelper(vector<int>& preorder , vector<int>& inorder){
+        
+        //hashmap to indexes of the inorder traversal 
+        unordered_map<int , int>hash;
+        
+        for(int i = 0 ; i < inorder.size();  i++){
+            hash[inorder[i]] = i;
+        }
+        cout<<hash[-1]<<endl;
+        return helper(preorder,0 , inorder.size() - 1 ,  hash);
+    }
+     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+             
+           return subhelper(preorder , inorder);
+     }
+    
+/*    TreeNode* helper(vector<int>& preorder ,int pi , int pl ,  vector<int>&inorder , int ii , int jl){
         
         if(pi > pl || ii > jl){
             return NULL;
@@ -59,5 +93,5 @@ public:
        
         
         return helper(preorder , 0 , preorder.size() - 1 , inorder , 0 , inorder.size() - 1);
-    }
+    }*/
 };
