@@ -2,7 +2,7 @@ class Solution {
 public:
      unordered_set<int>safe , cycle;
     //returns true if safe node , not forming cycle
-    bool dfs(int u, vector<vector<int>>&graph , vector<bool>visited){
+    bool dfs(int u, vector<vector<int>>&graph , vector<bool>&visited){
         
          //if node is already safe
         if(safe.find(u) != safe.end()){
