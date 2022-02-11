@@ -1,7 +1,12 @@
 class Solution {
     vector<char>parent;
     char find(char x) {
-        return parent[x] == x ? x : find(parent[x]);
+       if(parent[x] == x)return x;
+        
+        int temp = find(parent[x]);
+        
+        parent[x] = temp;
+        return temp;
     }
 public:
     bool equationsPossible(vector<string>& equations) {
