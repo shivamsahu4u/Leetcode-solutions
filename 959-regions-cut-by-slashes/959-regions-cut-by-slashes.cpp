@@ -13,25 +13,25 @@ public:
         return temp;
     }
     
-    void unio(int a , int b , int parent[] , int rank[]){
+//     void unio(int a , int b , int parent[] , int rank[]){
         
-        int parenta = paren(a,parent);
-        int parentb = paren(b,parent);
+//         int parenta = paren(a,parent);
+//         int parentb = paren(b,parent);
         
-        if(parenta != parentb){
+//         if(parenta != parentb){
             
-            if(rank[parenta] < rank[parentb]){
-                parent[parenta] = parentb;
-            }else if(rank[parenta] > rank[parentb]){
-                parent[parentb] = parenta;
-            }else{
-                parent[parentb] = parenta;
-                rank[parenta]++;
-            }
-        }else{
-            count++;
-        }
-    }
+//             if(rank[parenta] < rank[parentb]){
+//                 parent[parenta] = parentb;
+//             }else if(rank[parenta] > rank[parentb]){
+//                 parent[parentb] = parenta;
+//             }else{
+//                 parent[parentb] = parenta;
+//                 rank[parenta]++;
+//             }
+//         }else{
+//             count++;
+//         }
+//     }
     
     int regionsBySlashes(vector<string>& grid) {
        
@@ -54,8 +54,12 @@ public:
                      
                      int first = i*dots + j;
     
-                      if(first != 0)
-                      unio(0 , first , parent , rank);
+                      if(first != 0){
+                      // unio(0 , first , parent , rank);
+                       
+                         
+                          parent[first] = 0;
+                      }
                  }
             }
         }
@@ -70,13 +74,32 @@ public:
                     int first = i*dots + (j+1);
                     int second = (i+1)*dots + j;
                     
-                    unio(first , second , parent ,rank);
+                    // unio(first , second , parent ,rank);
+                    
+                     int x = paren(first , parent);
+                    int y = paren(second , parent);
+                    
+                    if(x != y){
+                        parent[x] = y;
+                       
+                    }else{
+                         count++;
+                    }
+                    
                 }else if(s[j] == '\\'){
                     
                     int first = i*dots + j;
                     int second = (i+1)*dots + (j+1);
+                     int x = paren(first , parent);
+                    int y = paren(second , parent);
                     
-                    unio(first , second , parent , rank);
+                    if(x != y){
+                        parent[x] = y;
+                        
+                    }else{
+                        count++;
+                    }
+                    // unio(first , second , parent , rank);
                 }
             }
         }
