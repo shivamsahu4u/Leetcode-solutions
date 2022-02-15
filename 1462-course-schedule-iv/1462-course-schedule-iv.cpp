@@ -1,45 +1,49 @@
 class Solution {
 public:
-    
-    bool dfs(int u , int v , vector<int>adj[] , vector<bool>&visited){
+
+    bool dfs(int a , int b , vector<int>adj[] , int **mat){
         
-        if(u == v){
-            return true;
+        if(mat[a][b]!=-1){
+            return mat[a][b];
         }
-         visited[u] = true;
         
-        for(auto it : adj[u]){
+        for(auto it : adj[a]){
             
-            if(!visited[it]){
-                
-                if(dfs(it , v , adj , visited)){
-                    return true;
-                }
+             if(dfs(it , b , adj , mat)){
+                 mat[a][b] = true;
+                 return true;
+             }
+        }
+        
+        mat[a][b] = false;
+        return false;
+    }
+    vector<bool> checkIfPrerequisite(int n, vector<vector<int>>& pre, vector<vector<int>>& q) {
+      
+        int **mat = new int*[n];
+        
+        for(int i = 0 ; i < n ; i++){
+            mat[i] = new int[n];
+            for(int j = 0 ; j < n ; j++){
+                mat[i][j] = -1;
             }
         }
         
-        return false;
-    }
-    vector<bool> checkIfPrerequisite(int numCourses, vector<vector<int>>& pre, vector<vector<int>>& q) {
-        
-        int n = numCourses;
-            
-         vector<int>adj[n];
+        vector<int>adj[n];
         
         for(auto path : pre){
-             adj[path[0]].push_back(path[1]);
+            
+             mat[path[0]][path[1]] = 1;
+             adj[path[0]].push_back(path[1]);     
         }
         
-        
-       
-        vector<bool>ans;
+        vector<bool>ans(q.size() , false);
         for(int i = 0 ; i < q.size() ; i++){
-             vector<bool>visited(n , false);
-            if(dfs(q[i][0] , q[i][1] , adj , visited)){
-                ans.push_back(true);
+            
+            if(dfs(q[i][0] , q[i][1] , adj , mat)){
+                ans[i]= true;
             }else{
-               
-                ans.push_back(false);
+                ans[i]= false;
             }
         }
         
