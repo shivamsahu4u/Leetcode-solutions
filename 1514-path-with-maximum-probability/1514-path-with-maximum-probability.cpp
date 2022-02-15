@@ -25,12 +25,12 @@ public:
                 
                 pair<double , int>front = q.top();
                 q.pop();
-              
+                visited[front.second] = true;
                 
                 for(auto it : arr[front.second]){
                     
                   
-                    if(front.first*it.second > ans[it.first]){
+                    if(!visited[it.first] && front.first*it.second > ans[it.first]){
                       
                         ans[it.first] = front.first*it.second;
                         q.push(make_pair(ans[it.first] , it.first));
