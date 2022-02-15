@@ -35,7 +35,7 @@ public:
             v.push_back(make_pair(i , indeegre[i]));
         }
         
-        sort(v.begin() , v.end() , comp);
+      //  sort(v.begin() , v.end() , comp);
         int mx = INT_MIN;
         for(int i = 0 ; i < v.size() ; i++){
             
