@@ -1,56 +1,43 @@
 class Solution {
 public:
     string removeKdigits(string num, int k) {
-        // number of operation greater than length we return an empty string
-        if(num.length() <= k)   
+     
+        stack<char>q;
+        
+        if(num.size() <= k){
             return "0";
+        }
         
-        // k is 0 , no need of removing /  preforming any operation
-        if(k == 0)
-            return num;
         
-        string res = "";// result string
-        stack <char> s; // char stack
-        
-        s.push(num[0]); // pushing first character into stack
-        
-        for(int i = 1; i<num.length(); ++i)
-        {
-            while(k > 0 && !s.empty() && num[i] < s.top())
-            {
-                // if k greater than 0 and our stack is not empty and the upcoming digit,
-                // is less than the current top than we will pop the stack top
-                --k;
-                s.pop();
+        for(auto c : num){
+            
+            //c are the characters
+            
+            while(q.size() != 0 && k > 0 && q.top() > c){
+                q.pop();
+                k--;
             }
             
-            s.push(num[i]);
-            
-            // popping preceding zeroes
-            if(s.size() == 1 && num[i] == '0')
-                s.pop();
+            if(!q.empty() || c != '0'){
+                q.push(c);
+            }
         }
         
-        while(k && !s.empty())
-        {
-            // for cases like "456" where every num[i] > num.top()
-            --k;
-            s.pop();
+        //there is case when the letters are in ascending order already
+        
+        while(q.size()!= 0 && k > 0){
+            q.pop();
+            k--;
         }
         
-        while(!s.empty())
-        {
-            res.push_back(s.top()); // pushing stack top to string
-            s.pop(); // pop the top element
+        int n = num.size();
+        while(q.size()!=0){
+            num[n-1] = q.top();
+            q.pop();
+            n--;
         }
         
-        reverse(res.begin(),res.end()); // reverse the string 
-        
-        if(res.length() == 0)
-            return "0";
-        
-        return res;
-        
+        return num.substr(n) == ""?"0":num.substr(n);
         
     }
 };
