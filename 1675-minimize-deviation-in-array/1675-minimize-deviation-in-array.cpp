@@ -1,5 +1,15 @@
 class Solution {
 public:
+    //Minimum deviation 
+    
+    //in this we have to notice two points
+    //1. we can increase the even numbers 
+    
+    //intution : Intution is to increase the odd numbers and decrease the even numbers so as to decrease the gap between the min and max
+    //for example - [1 2 3 4] we increase the numbers to its highest values first
+    // its be like [2 2 6 4] now we decrease the hightest number to achieve the minimum difference
+    // we start decreasing the even numbers step by step so to get closer to the min numbers , once top is odd we can decrease it anymore
+    // 2 2 4 3  // 2 2 2 3  // 3 - 2 = 1 Ans
     int minimumDeviation(vector<int>& nums) {
         
         int mx = INT_MIN ; int mi = INT_MAX;
