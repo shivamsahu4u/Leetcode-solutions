@@ -1,5 +1,9 @@
 class Solution {
 public:
+    //Kruskals algorithm time complexity is O(ElogE (sorting) + E * ElogV (logV for disjoint set and E is number of edges) )
+    
+    //So critical edges are edges removing those minimum spanning tree can be minimum or clearly say cant be completed , its sum will definelty increase
+    //and non critical edges are those adding whom sum remain same as that of mst but they are not critical or important in formation for minimum spanning tree
     
     int par(int ele , int parent[]){
         if(parent[ele] == ele){
