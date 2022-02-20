@@ -24,7 +24,7 @@ public:
         
         for(auto it : arr[u]){
             
-            if(!visited[it.first] && distance[it.first] == distance[u] - (ll)it.second)
+            if(!visited[it.first] && distance[it.first] == distance[u] + (ll)it.second)
             count = ((count)%mod + (dfs(it.first , arr , n , distance , visited) % mod)) % mod;
         }
         
@@ -45,11 +45,11 @@ public:
         //after that we can do dfs to find number of paths having that shortest distance to visit n
         
         vector<ll>dist(n , 1e15);
-        dist[n-1] = 0;
+        dist[0] = 0;
         
         //we use min priority queue here in Dijkastra to find shortest distance
         priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>>pq;
-        pq.push({0 , n-1}); // distance , node data
+        pq.push({0 , 0}); // distance , node data
         
         while(pq.size()!=0){
             
@@ -71,9 +71,7 @@ public:
             }
         }
         
-//         for(ll i = 0 ; i < n ; i++){
-//             cout<<i << " " << dist[i]<<endl;
-//         }
+
         
         vector<bool>visited(n ,false);
         memset(dp ,-1 , sizeof(dp));
