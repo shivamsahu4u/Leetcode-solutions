@@ -10,15 +10,15 @@ public:
         // if(hash[u].size() == 0){
         //     return;
         // }
-        
+        ;
        while(hash[u].size()!= 0){
            string s = hash[u].top();
            hash[u].pop();
         dfs(s  , visited , v);
              
         }
-        
          v.push_back(u);
+        
     }
     vector<string> findItinerary(vector<vector<string>>& tickets) {
      
