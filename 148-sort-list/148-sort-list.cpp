@@ -28,8 +28,7 @@ public:
                 }
                   ListNode*t = head1->next;
                   head1 = head1->next;
-                 // if(t != NULL)
-                 //  t->next = NULL;
+                
                 
             }else if(head1->val > head2->val){
                 if(head == NULL){
@@ -42,48 +41,49 @@ public:
                 }
                 ListNode*t = head2->next;
                 head2 = head2->next;
-                //  if(t != NULL)
-                // t->next = NULL;
+             
             }
         }
         
-        while(head1!=NULL){
-            if(head == NULL){
-                  head = head1;
-                  tail = head1;  
-                }else{
+//         while(head1!=NULL){
+//             if(head == NULL){
+//                   head = head1;
+//                   tail = head1;  
+//                 }else{
                     
-                  tail->next = head1;
-                  tail = tail->next;
-                }
-                  ListNode*t = head1->next;
-                  head1 = head1->next;
-             // if(t != NULL)
-             //      t->next = NULL;
-        }
+//                   tail->next = head1;
+//                   tail = tail->next;
+//                 }
+//                   ListNode*t = head1->next;
+//                   head1 = head1->next;
+           
+//         }
         
-        while(head2!=NULL){
-             if(head == NULL){
-                    head = head2;
-                    tail = head2;
-                }else{
+//         while(head2!=NULL){
+//              if(head == NULL){
+//                     head = head2;
+//                     tail = head2;
+//                 }else{
                     
-                    tail->next = head2;
-                    tail =tail->next;
-                }
-                ListNode*t = head2->next;
-                head2 = head2->next;
-             // if(t != NULL)
-             //    t->next = NULL;
-            }
-        
-    tail->next = NULL;
+//                     tail->next = head2;
+//                     tail =tail->next;
+//                 }
+//                 ListNode*t = head2->next;
+//                 head2 = head2->next;
+          
+//             }
+ 
+   if(head1 != NULL){
+       tail->next = head1;
+   }else if(head2 != NULL){
+       tail->next = head2;
+   }
+ //  tail->next = NULL;
       return head;
     }
     ListNode* sortList(ListNode* head) {
         
         //we can follow merge sort technique here
-        
         //merge sort is break and combine
         
         if(head == NULL || head->next == NULL){
