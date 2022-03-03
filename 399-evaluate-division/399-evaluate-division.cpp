@@ -24,18 +24,21 @@ public:
             return -1.00000;
         }
             
-            for(auto it : arr[u]){
+//             for(auto it : arr[u]){
                 
-                if( it.first == v){
-                    return ans*it.second;
-                }
-            }
+//                 if( it.first == v){
+//                     return ans*it.second;
+//                 }
+//             }
         
         
         for(auto it : arr[u]){
             
               if(!visited[it.first]){
-                 
+                  if( it.first == v){
+                    return ans*it.second;
+                }
+                  
                   double ar = ans*it.second;
                  // cout<<u<<" "<<it.first<<" "<<ar<<" "<<endl;
               double a = dfs(it.first , v , arr , visited , ar);
