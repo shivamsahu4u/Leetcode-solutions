@@ -1,22 +1,42 @@
 class Solution {
 public:
+    // TC - O(N)
+    // SC - O(N)
     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
         
-        stack<int>st;
-        int j = 0 ;
-        for(int i = 0 ; i < pushed.size() ; i++){
+       int i = 0 , j = 0;
+        
+        for(auto x  : pushed){
             
-            st.push(pushed[i]);
+             pushed[i] = x;
+             i++;
             
-            while(st.size() > 0 && st.top() == popped[j]){
-                st.pop();
+            while(i > 0 && pushed[i-1] == popped[j]){
                 j++;
+                i--;
             }
         }
-        return st.size() == 0;
+        return i==0;
     }
 };
 
+// TC - O(N)
+// SC - O(N)
+//     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
+        
+//         stack<int>st;
+//         int j = 0 ;
+//         for(int i = 0 ; i < pushed.size() ; i++){
+            
+//             st.push(pushed[i]);
+            
+//             while(st.size() > 0 && st.top() == popped[j]){
+//                 st.pop();
+//                 j++;
+//             }
+//         }
+//         return st.size() == 0;
+//     }
 
 //TC - O(N)
 //SC - O(N)
