@@ -1,31 +1,36 @@
 class Solution {
 public:
-   vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red_edges, vector<vector<int>>& blue_edges) {
-        // constructing adjacency matrix
-		vector<vector<pair<int,int>>> graph(n);
-        for(auto edge: red_edges)
-            graph[edge[0]].emplace_back(edge[1],0); //red edges are denoted by 0 
-        for(auto edge: blue_edges)
-            graph[edge[0]].emplace_back(edge[1],1); // blue edges are denoted by 1
-        vector<int> dist(n,-1); 
-        
-        queue<vector<int>> q;
-        q.emplace(vector<int>{0,0,-1});
-        
-        while(!q.empty()) {
-            auto front = q.front();
-            q.pop();
-            dist[front[0]] = dist[front[0]] != -1 ? dist[front[0]] : front[1];
-            
-            for(auto &adj : graph[front[0]]) {
-				//Push the node to the queue only if the next edge color is different from the pervious edge color and also if we are visiting the edge
-				//for the first time.
-                if(front[2] != adj.second && adj.first!= -1) {
-                    q.emplace(vector<int>{adj.first, front[1] + 1, adj.second});
-					//Update the value in the adjacency matrix to -1 to denote that the node has already been visited.
-                    adj.first = -1;
+    vector<int> red[102], blue[102];
+    bool visited[102][2];
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& redEdges, vector<vector<int>>& blueEdges) {
+        for(auto n : redEdges) red[n[0]].push_back(n[1]);
+        for(auto n : blueEdges) blue[n[0]].push_back(n[1]);
+        vector<int> dist(n, INT_MAX);
+        queue<vector<int>>pq;
+        for(auto it : red[0]) pq.push({it, 1, 0});              // red color = 0
+        for(auto it : blue[0]) pq.push({it, 1, 1});             // blue color = 1
+        dist[0] = 0;
+        while(!pq.empty()){
+            auto t = pq.front();
+            pq.pop();
+            int i = t[0];                                       // vertex
+            int j = t[1];                                       // distance
+            int k = t[2];                                       // color
+            visited[i][k] = true;
+            dist[i] = min(dist[i], j); 
+            if(k == 1){
+                for(auto it : red[i]){                               // if color is blue then we will traverse red edges
+                    if (!visited[it][0]) pq.push({it, j + 1, 0});
                 }
             }
+            else if(k == 0){
+                for (auto it : blue[i]){                             // if color is red then we will traverse blue edges
+                    if (!visited[it][1]) pq.push({it, j + 1, 1});
+                }
+            }
+        }
+        for(int i = 0; i<n; i++){                                    // the vertex we can't reach we have to update it to -1
+            if(dist[i] == INT_MAX) dist[i] = -1;
         }
         return dist;
     }
