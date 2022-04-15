@@ -53,7 +53,7 @@ public:
         return mem[u][pre+1];
     }
     
-    // #Dynamic Programming TC-O(N2) SC - O(N)
+    // #Dynamic Programming  TC-O(N2) SC - O(N)
     int dp(vector<int>&nums){
         int n = nums.size();
        vector<int>arr(n+1 , 1);
@@ -75,14 +75,35 @@ public:
 
         return u;
     }
+    
+    // Further we can reduce this time complexity using a trick
+    // we can use binary search to optimise the time complexity to O(nlogn)
+    // we can use same array or diff array for the changes
+    int binary(vector<int>&nums){
+        
+         int len = 0;
+         
+          for(int i = 0 ; i < nums.size() ; i++){
+              
+               if(len == 0 || nums[i] > nums[len-1]){
+                   nums[len++] = nums[i];
+               }else{
+                   //else find the smallest element , larger than nums[i] and replace that with this
+                   *lower_bound(begin(nums) , begin( nums) + len , nums[i]) = nums[i];
+               }
+          }
+        return len;
+    }
+    
     int lengthOfLIS(vector<int>& nums) {
         
         // #recursion
         // int n = nums.size();
         // vector<vector<int>>mem(n , vector<int>(n+1 , -1));
         // return memoization(nums , 0 , n ,-1, mem);
-         return dp(nums);
+         // return dp(nums);
          // recursion(nums , 0 , nums.size() , INT_MIN , 0 , arr);
          // return ans;
+        return binary(nums);
     }
 };
