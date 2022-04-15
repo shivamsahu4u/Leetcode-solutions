@@ -1,9 +1,21 @@
+// class Solution {
+// public:
+//     int lengthOfLIS(vector<int>& A) {
+//         int len = 0;
+//         for(auto cur : A) 
+//             if(len == 0 || A[len-1] < cur) A[len++] = cur;             // extend
+//             else *lower_bound(begin(A), begin(A) + len, cur) = cur;    // replace
+//         return len;
+//     }
+// };
 class Solution {
 public:
     
+   // #Recursion
     int ans = INT_MIN;
     void recursion(vector<int>&nums , int u , int v , int m , int count ){
-        
+        // since we have 2 choices for each index
+        // so TC - O(2^n) SC - O(N) (recursion stack)
         if(u == v){
          if(count > ans){
              ans = count;   
@@ -11,53 +23,64 @@ public:
             return;
         }
         
-        
         if(nums[u] > m){
-            recursion(nums , u+1 , v , nums[u] , count+1 );
-           // recursion(nums , u+1 , v , m , count);
-            
+            // either included
+          recursion(nums , u+1 , v , nums[u] , count+1 );  
         }
+        // not included , searching of any other small element
           recursion(nums , u+1 , v , m , count );
-        
     }
+    
+    // # Memoization TC - O(N2) SC - O(N2)
+    int memoization(vector<int>&nums , int u  , int v , int pre , vector<vector<int>>&mem){
+        
+        if(u == v){
+            return 0;
+        }
+        
+         if(mem[u][pre+1]!=-1){
+            return mem[u][pre+1];
+         }
+        
+         int include = 0 , notinclude = 0;
+         if(pre == -1 || nums[u] > nums[pre]){
+             include = 1+ memoization(nums , u+1 , v , u , mem);
+         }
+        
+           notinclude = memoization(nums , u+1 , v , pre , mem);
+        
+        mem[u][pre+1] = max(include, notinclude);
+        return mem[u][pre+1];
+    }
+    
+    // #Dynamic Programming TC-O(N2) SC - O(N)
     int dp(vector<int>&nums){
         int n = nums.size();
-        int *arr = new int[n+1];
+       vector<int>arr(n+1 , 1);
         arr[0] = 1;
         int u = 1;
         for(int i = 1 ; i < n ; i++){
-            int m  = INT_MIN;
-            int ind = -1;
-            int mx = INT_MIN;
+            
             for(int j = i-1 ; j >=0 ; j--){
                 
                 if(nums[j] < nums[i]){
                 
-                    if(mx < arr[j]){
-                        mx = arr[j];
-                        m = nums[j];
-                        ind = j;
-                    }
+                    arr[i] = max(arr[i] , arr[j] + 1);
+                    
                 }
-            }
-            
-            if(m == INT_MIN){
-                arr[i] = 1;
-            }else{
-                arr[i] = arr[ind] + 1;
             }
             
             u = max(u , arr[i]);
         }
-        for(int i = 0 ; i < n ; i++){
-            cout<<arr[i]<<" ";
-        }
+
         return u;
     }
     int lengthOfLIS(vector<int>& nums) {
         
-        //#recursion
-        
+        // #recursion
+        // int n = nums.size();
+        // vector<vector<int>>mem(n , vector<int>(n+1 , -1));
+        // return memoization(nums , 0 , n ,-1, mem);
          return dp(nums);
          // recursion(nums , 0 , nums.size() , INT_MIN , 0 , arr);
          // return ans;
