@@ -12,6 +12,8 @@ public:
             return max(longestCommonSubsequenceR(text1.substr(1) , text2) ,                                              longestCommonSubsequenceR(text1 , text2.substr(1)));    
     }
     }
+    
+    // TC - O(N2)
     // # Memoization Approach
       int memoization(int u , int v , string text1 , string text2 , vector<vector<int>>&dp){
           if(u == text1.size() || v == text2.size()){
@@ -73,11 +75,36 @@ public:
         }
         return dp[n-1][m-1];
     }
+    
+    int dpOptimised(string text1 , string text2){
+        
+        vector<vector<int>>arr(2 , vector<int>(text2.size()+1 , 0));
+        
+        for(int i = 0 ; i <= text1.size() ; i++){
+            
+            for(int j = 0 ; j <= text2.size() ; j++){
+                
+                if(i == 0 || j == 0){
+                    arr[i % 2][j] = 0;
+                }else{
+                    
+                    if(text1[i-1] == text2[j-1]){
+                        
+                        arr[i%2][j] = 1 + arr[(i+1)%2][j-1];
+                    }else{
+                        arr[i%2][j] = max(arr[(i+1)%2][j] , arr[i%2][j-1]);
+                    }
+                }
+            }
+        }
+        
+        return arr[text1.size() % 2][text2.size()];
+    }
     int longestCommonSubsequence(string text1, string text2) {
         
         //  int n = text1.size() ; int m = text2.size();
         // vector<vector<int>>dp(n , vector<int>(m , -1));
         // return memoization(0 , 0 , text1 , text2 , dp);
-        return dp(text1 , text2);
+        return dpOptimised(text1 , text2);
     }
 };
