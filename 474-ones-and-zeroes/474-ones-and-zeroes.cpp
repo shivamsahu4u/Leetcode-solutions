@@ -35,12 +35,54 @@ public:
         
         return dp[u][m][n] = max(left , right);
     }
+    
+    int dp1(count cc[] , int v , int m , int n){
+        
+        //taking 3d array
+        int arr[v+1][m+1][n+1];
+        for(int i = 0 ; i <= v ; i++){
+            for(int j = 0 ; j <= m ; j++){
+                for(int k = 0 ; k <= n ; k++){
+                    arr[i][j][k] = 0;
+                }
+            }
+        }
+        int ans = 0;
+        for(int i = 1 ; i <= v ; i++){
+            
+            int ones =  cc[i-1].one;
+            int zeros = cc[i-1].zero;
+            // here we are not starting from 1 , because we have two parameter here, 
+            // such that case can be 0 zero 1 one and 1 zero and 0 one
+            for(int j = 0; j <= m ; j++){
+                
+                for(int k =0; k <= n ; k++){
+                    
+                    // if we do not include the string 
+                    arr[i][j][k] = arr[i-1][j][k];
+                    
+                    //if we include the string
+                    
+                    if(zeros <= j && ones <= k){
+                        
+                        arr[i][j][k] = max(arr[i][j][k] , 1+arr[i-1][j-zeros][k-ones]);
+                    }
+                    
+                     // ans = max(ans , arr[i][j][k]);
+                }
+            }
+            
+           
+        }
+        // return ans;
+        return arr[v][m][n];
+    }
     int findMaxForm(vector<string>& strs, int m, int n) {
         
          int x = strs.size();
          count cc[x];
         
-      //  vector<vector<vector<int>>>dp(x , vector<int>(m+1 , vector<int>(n+1 , -1)));
+       // vector<vector<vector<int>>>dp(x , vector<int>(m+1 , vector<int>(n+1 , -1)));
         memset(dp  , -1 , sizeof(dp));
         for(int j = 0 ; j < x ; j++){
             
@@ -55,7 +97,9 @@ public:
         }
         
         
-        return helper(strs , cc , 0 , x , m , n);
+//         return helper(strs , cc , 0 , x , m , n);
+        
+        return dp1(cc ,x , m , n);
        
     }
 };
