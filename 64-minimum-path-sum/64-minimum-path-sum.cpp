@@ -27,10 +27,38 @@ public:
         
         return dp[i][j] = min(ans1 , ans2);
     }
-    int minPathSum(vector<vector<int>>& grid) {
+    
+    int dpp(vector<vector<int>>& grid){
           int m = grid.size();
           int n = grid[0].size();
-          vector<vector<int>>dp(m , vector<int>(n , -1));
-         return helper(grid , 0 , 0 , m , n , dp);
+          vector<vector<int>>dp(m , vector<int>(n , 0));
+        int c = 0;
+        for(int i = 0 ; i < m ; i++){
+            c += grid[i][0];
+            dp[i][0] = c;
+        }
+         c = 0;
+        for(int i = 0 ; i < n ; i++){
+            c += grid[0][i];
+            dp[0][i] = c;
+        }
+        
+        for(int i = 1 ; i < m ; i++){
+            
+            for(int j = 1 ; j < n ; j++){
+                
+                dp[i][j] =  grid[i][j] + dp[i-1][j];
+                dp[i][j] = min(dp[i][j] , grid[i][j] + dp[i][j-1]);
+            }
+        }
+        
+        return dp[m-1][n-1];
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+    return dpp(grid);
+    //       int m = grid.size();
+    //       int n = grid[0].size();
+    //       vector<vector<int>>dp(m , vector<int>(n , -1));
+    //      return helper(grid , 0 , 0 , m , n , dp);
     }
 };
