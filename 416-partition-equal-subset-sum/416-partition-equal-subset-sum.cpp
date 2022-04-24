@@ -26,6 +26,39 @@ public:
         
         return dp[i][sum] = ans1 || ans2;
     }
+    int dpp(vector<int>&nums){
+          int sum = 0;
+       for(int i = 0 ; i < nums.size();i++){
+           sum = sum + nums[i];
+       } 
+         if(sum % 2 != 0)return false;
+         vector<vector<bool>>dp(nums.size()+1 , vector<bool>(sum/2 + 1 , false));
+        
+               for(int i= 1 ; i < sum/2 + 1 ; i++){
+                   dp[0][i] = false;
+               }
+        
+        for(int i = 0 ; i < nums.size() + 1 ; i++){
+            dp[i][0]= true;
+        }
+        
+        for(int i = 1 ; i < nums.size() + 1 ; i++){
+            
+            
+            for(int j = 1 ; j < sum/2 + 1 ; j++){
+                
+                //checking weather that element can be used or not 
+                if(j >= nums[i-1]){
+                    // we are using the element as the subset element
+                    dp[i][j] = dp[i-1][j - nums[i-1]];
+                }
+                  // we are not using the element
+                   dp[i][j] = dp[i][j] || dp[i-1][j];
+            }
+        }
+        
+        return dp[nums.size()][sum/2];
+    }
     bool canPartition(vector<int>&  nums) {
         
         // so we can follow the intution like this
@@ -35,14 +68,15 @@ public:
         // if not , we cant partition
         // if yes , indeed we can
         
-        int sum = 0;
-       for(int i = 0 ; i < nums.size();i++){
-           sum = sum + nums[i];
-       } 
-         if(sum % 2 != 0)return false;
-        cout<<sum;
-      vector<vector<int>>dp(nums.size()+1 , vector<int>(sum/2 + 1 , -1));
-        return helper(dp , nums , sum/2 , 0);
+//         int sum = 0;
+//        for(int i = 0 ; i < nums.size();i++){
+//            sum = sum + nums[i];
+//        } 
+//          if(sum % 2 != 0)return false;
+      
+        return dpp(nums);
+      // vector<vector<int>>dp(nums.size()+1 , vector<int>(sum/2 + 1 , -1));
+        // return helper(dp , nums , sum/2 , 0);
 //         vector<int>dp(nums.size() , -1);
 //         return helper(nums ,0 , nums.size() ,  0 , 0 , dp);
     }
