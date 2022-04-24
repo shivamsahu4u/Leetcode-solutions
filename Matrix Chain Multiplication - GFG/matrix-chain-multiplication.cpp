@@ -9,45 +9,31 @@ using namespace std;
 
 class Solution{
 public:
-
-    int recursion(int arr[] ,int s ,  int e , vector<vector<int>>&dp){
+    // 5   0 1 2 3 4
+    int recursion(vector<vector<int>>&dp , int arr[] , int s , int e){
         
-           if(s == e){
-               return 0;
-           }
-           
-           if(s+1 ==e ){
-               return 0;
-           }
-           
-          if(s+2 == e){
-              return arr[s]*arr[s+1]*arr[s+2];
-          }
-          
-          if(dp[s][e] != -1){
-              return dp[s][e];
-          }
-           
-           int m = INT_MAX;
-           // 1 , 2
-           for(int k = s+1 ;k < e ; k++){
-                                // 0 1
-                                // 0 2
-               int left = recursion(arr , s , k , dp);
-                                // 1 3
-                                // 2 3
-               int right = recursion(arr , k , e , dp);
-               
-               m = min(m , (left + right + arr[s]*arr[k]*arr[e]));
-           }
-           
-           return dp[s][e] =  m;
+    
+        if(s == e || s +1 == e){
+            return 0;
+        }
+        
+        if(dp[s][e] != -1){
+            return dp[s][e];
+        }
+        
+        int ans = INT_MAX;
+        for(int i = s+1 ; i < e ; i++){
+            int left = recursion(dp,arr , s , i);
+            int right = recursion(dp,arr , i , e);
+            int cost = left+right+arr[s]*arr[i]*arr[e];
+            ans = min(ans , cost);
+        }
+        return dp[s][e] = ans;
     }
     int matrixMultiplication(int N, int arr[])
     {
-        // Brute Force Solution
-        vector<vector<int>>dp(N+1 , vector<int>(N , -1));
-        return recursion(arr ,0 ,  N-1 , dp);
+        vector<vector<int>>dp(N+1 , vector<int>(N+1 , -1));
+       return recursion(dp , arr , 0 , N-1);
     }
 };
 
