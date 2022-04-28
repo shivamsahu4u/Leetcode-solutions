@@ -1,6 +1,29 @@
 class Solution {
 public:
-    int helper(vector<vector<int>>&dp , vector<int>&coins , int u , int v , int count){
+    int coinChange(vector<int>& coins, int amount) {
+        int Max = INT_MAX-1;
+        vector<int> dp(amount + 1, Max);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.size(); j++) {
+                if (coins[j] <= i) {
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return (dp[amount] == Max) ? -1 : dp[amount];
+    }
+};
+/*class Solution {
+public:*/
+    //Recursion
+    //TC - O(2^N)
+    // SC - N ( RECURSIVE STACK SPACE)
+    
+    // MEMOIZATION
+    //TC  - O(N * AMOUNT)
+    //SC - O(N * AMOUNT)
+  /*  int helper(vector<vector<int>>&dp , vector<int>&coins , int u , int v , int count){
         
         if(count == 0){
             return 0;
@@ -22,8 +45,12 @@ public:
         ans2 = helper(dp,coins , u+1 , v , count);
         
         return dp[u][count] = min(ans2 , ans1);
-    }
-    int dpp(vector<int>&coins , int amount){
+    }*/
+    
+    // DP
+    //TC  - O(N * AMOUNT)
+    //SC - O(N * AMOUNT)
+  /*  int dpp(vector<int>&coins , int amount){
         vector<vector<int>>dp(coins.size()+1, vector<int>(amount+1 , -1));
         
         for(int i = 1 ; i <= amount ; i++)
@@ -48,12 +75,12 @@ public:
             }
         }
         return dp[coins.size()][amount];
-    }
-    int coinChange(vector<int>& coins, int amount) {
+    }*/
+ /*   int coinChange(vector<int>& coins, int amount) {
         // vector<vector<int>>dp(coins.size(), vector<int>(amount+1 , -1));
         // int p = helper(dp, coins , 0 , coins.size() , amount);
         // return p== INT_MAX-1?-1:p;
         int p =  dpp(coins , amount);
         return p== INT_MAX-1?-1:p;
-    }
-};
+    }*/
+/*};*/
