@@ -1,35 +1,31 @@
 class Solution {
 public:
-    int dp[102][102];
-    int helper(vector<int>&cuts , int cs , int ce , int s , int e ){
-        
-        if(cs > ce  ){
-            return 0;
-        }
-        
-        if(dp[cs][ce] != -1){
-            return dp[cs][ce];
-        }
-        int res = INT_MAX;
-        
-        for(int i = cs ; i <= ce ; i++){
-            
-            int left = helper(cuts,   cs ,    i-1 ,      s , cuts[i] );
-            int right = helper(cuts , i+1 ,    ce ,   cuts[i] , e ); 
-            int ans = left + right + (e - s);
-            res = min(ans , res);
-        }
-        return  dp[cs][ce] = res;
-    }
     int minCost(int n, vector<int>& cuts) {
-        sort(cuts.begin(),cuts.end());
-        int cuts_start = 0;
-        int cuts_end = cuts.size() - 1;
-        
-        int start = 0;
-        int end = n;
-        memset(dp , -1 , sizeof dp);
-         //vector<vector<int>>dp(cuts[cuts.size()-1]+1 , vector<int>(cuts[cuts.size()-1]+1 , -1));    
-        return helper(cuts , cuts_start , cuts_end , start , end); 
-    }
+       
+        cuts.push_back(0);
+        cuts.push_back(n);
+        sort(cuts.begin() , cuts.end());
+        int s = cuts.size();
+         vector<vector<int> > dp(cuts.size(),vector<int> (cuts.size(),INT_MAX));
+    
+	// Your base cases stores the answer between [i.i]  and [i][i+1] subarrays or ranges, of size 2 only
+     for(int i=0;i<dp.size();i++) dp[i][i]=0;  // base cases as for a point cost is Zero
+     for(int i=0;i<dp.size()-1;i++)  dp[i][i+1]=0; //for every two points which constitue a stick is also zero
+        // 0 1 3 4 5 7
+                  //2     //
+        for(int l = 2 ; l < s ; l++){
+            
+                  for(int i = 0 ; i < s - l ; i++){
+                      
+                      int j = i + l;
+                      
+                      dp[i][j] = INT_MAX;
+                      for(int k = i+1 ; k < j ; k++){
+                          
+                          dp[i][j] = min(dp[i][j] , dp[i][k] + dp[k][j] + (cuts[j]-cuts[i]));
+                      }
+                  }
+        }
+        return dp[0][s-1];
+    } 
 };
