@@ -14,7 +14,8 @@ public:
                   color[it] = 1 - color[s];
                  
                  if(!helper(it , graph , color))
-                     return false;    // we cantt
+                     return false;    // we cant say true until we check all the graph
+                 //but we say false , we in any part there is some mistake towards graph to be                           biparttie
                  
              }else if(color[s] == color[it]){
                  return false;
