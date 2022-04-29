@@ -32,12 +32,10 @@ public:
     }
     int helper( string A , int s , int e , vector<string> &B , vector<vector<int>>&dp){
         
-        // if(s > e){
-        //     return 1;
-        // }
+      
          if(B.size() == 0){
              
-             if(s >= e){
+             if(s == e){
                  return 1;
              }
              return  0;
