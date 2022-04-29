@@ -95,10 +95,57 @@ int dpp(int n , int k){
         }
         return dp[eggs][floors] =  res;
     }
+    
+    int dppOptimised(int n , int k){
+          vector<vector<int>>dp(n+1 , vector<int>(k+1 , -1));
+           // n eggs , k floors
+          // egg is 0
+          for(int i = 0 ; i < k+1 ; i++){
+              dp[0][i] = i; // worst case to be taken
+          }
+          // egg is one
+          for(int i = 0 ; i < k+1 ; i++){
+              dp[1][i] = i;
+          }
+          
+          for(int i = 0 ; i < n+1 ; i++){
+              dp[i][0] = 0;
+          }
+          
+          for(int i = 0 ; i < n+1 ; i++){
+              dp[i][1] = 1;
+          }
+          
+          for(int i = 2 ; i < n+1 ; i++){
+              
+              for(int j = 2 ; j < k+1 ; j++){
+                  
+                   int l = 1;
+                  int h = j;
+                   dp[i][j] = INT_MAX;
+                  while(l <= h){
+                      
+                      int mid  = (l+h)/2;
+                      
+                      int left = dp[i-1][mid-1];
+                      int right = dp[i][j - mid];
+                      int ans = 1 + max(left , right);
+                      
+                      if(left < right){
+                          l = mid + 1;
+                      }else{
+                          h = mid - 1;
+                      }
+                      dp[i][j] = min(dp[i][j] , ans);
+                  }
+              }
+          }
+          return dp[n][k];
+    }
     int superEggDrop(int k, int n) {
         vector<vector<int>>dp(k+1 , vector<int>(n+1 , -1));
         // return eggDrop(k , n , dp );
         //  // return dpp(k , n);
-        return optimisedMemo(k , n, dp);
+        return dppOptimised(k , n);
     }
 };
