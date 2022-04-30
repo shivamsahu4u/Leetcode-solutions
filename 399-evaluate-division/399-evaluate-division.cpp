@@ -1,14 +1,15 @@
+//Approach - SIMPLE DFS IMPLMENTATION
+//TIME COMPLEXITY - O( Q* (E + V)) [simple dfs approach]
+//SPACE COMPLEXITY - O(V) [Visited] + o(E) [for adjacency matrix]
 class Solution {
 public:
     
     double dfs(string u , string v ,  unordered_map<string , vector<pair<string , double>>>&arr , unordered_map<string , bool>visited , double ans){
         
         if(u == v){
-
             if(arr.count(u) == 0){
                 return -1.00000;
             }
-            
             return ans;
         }
         
@@ -23,14 +24,6 @@ public:
         if(arr[u].size() == 0){
             return -1.00000;
         }
-            
-//             for(auto it : arr[u]){
-                
-//                 if( it.first == v){
-//                     return ans*it.second;
-//                 }
-//             }
-        
         
         for(auto it : arr[u]){
             
@@ -40,7 +33,7 @@ public:
                 }
                   
                   double ar = ans*it.second;
-                 // cout<<u<<" "<<it.first<<" "<<ar<<" "<<endl;
+                 
               double a = dfs(it.first , v , arr , visited , ar);
                if(a != -1.00000){
                    return a;
@@ -52,9 +45,7 @@ public:
     }
     vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
         
-       // [a , b] , a - > b - > a/b
-       // b -> a =  1 / (a/b)
-        
+      
         int n = equations.size();
         int i = 0;
          unordered_map<string , vector<pair<string , double>>>arr; 
@@ -62,26 +53,21 @@ public:
         for(auto path : equations){
              
             arr[path[0]].push_back(make_pair(path[1] , values[i]));
-            // cout<<(1.0/values[i])<<" ";
             arr[path[1]].push_back(make_pair(path[0] , (1.0/values[i])));
            
             i++;
         }
         vector<double>ret;
         unordered_map<string  ,bool>visited;
-        for(auto q : queries){
-            
-                
+        for(auto q : queries){ 
                double p =  dfs(q[0] , q[1] , arr , visited , 1.00000);
                 
                 ret.push_back(p);
-                 // cout<<endl<<endl;
-            
         }
         return ret;
     }
 };
-
+/*********************************************************************************************/
 
 
 
