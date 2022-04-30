@@ -22,51 +22,54 @@ struct Job
     int profit; // Profit if job is over before or on deadline 
 };
 */
-
+struct jobProfit {
+    bool operator()(Job const& a, Job const& b)
+    {
+        return (a.profit < b.profit);
+    }
+};
 class Solution 
 {
     public:
-    static bool comp(Job a , Job b){
-        return a.profit > b.profit;
+    static bool comp(Job a, Job b){
+        return a.dead < b.dead;
     }
-    vector<int> JobScheduling(Job arr[], int n) 
+    static bool com(Job a , Job b){
+        return a.profit < b.profit;
+    }
+    vector< int> JobScheduling(Job arr[], int n) 
     { 
-         //sort with decreasing order of the profit
-         //so that we can choose mazmimum profit first
-         
-         sort(arr , arr+n ,comp);
-         
-         // now we need to maintain slots , weather we can do job at a particular slot
-         // or not
-         // for this we maintain a slot array and will try to o work at last time of 
-         // the slot , so that maximum jobs can ne done
+       // sorting the arr in the accending order
+       sort(arr , arr+n , comp);
        
-        int mx = INT_MIN;
-        for(int i = 0 ; i < n ; i++){
-            mx = max(mx , arr[i].dead);
-        }
-        
-        //initially all slots are empty
-        vector<bool>slots(mx+1 , false);
-        int c = 0 , pro = 0;
-        for(int i = 0 ; i < n ; i++){
-            
-            for(int j = arr[i].dead ; j > 0 ; j--){
-                
-                if(slots[j] == false){
-                    // slot is empty ,so we can do job in this slot
-                    
-                    c++;
-                    pro = pro + arr[i].profit;
-                    slots[j] = true;
-                    break;
-                }
-            }
-        }
-        vector<int>ans;
-        ans.push_back(c);
-        ans.push_back(pro);
-        return ans;
+       priority_queue<Job , vector<Job> ,jobProfit>pq;
+       int c = 0 , pre= 0;
+       for(int i = n-1 ; i >=0 ; i--){
+           
+           int slotsInterval;
+           
+           if(i == 0){
+               slotsInterval = arr[i].dead;
+           }else{
+               slotsInterval = arr[i].dead - arr[i-1].dead;
+           }
+           
+           pq.push(arr[i]);
+           
+           while(pq.size() > 0 && slotsInterval > 0){
+               
+               Job job = pq.top();
+               pq.pop();
+               pre = pre + job.profit;
+               c = c + 1;
+               slotsInterval--;
+           }
+       }
+       
+       vector<int>a;
+       a.push_back(c);
+       a.push_back(pre);
+       return a;
     } 
 };
 
