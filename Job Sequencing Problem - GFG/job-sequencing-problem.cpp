@@ -22,63 +22,52 @@ struct Job
     int profit; // Profit if job is over before or on deadline 
 };
 */
-#include<vector>
-using namespace std;
-struct jobProfit {
-    bool operator()(Job const& a, Job const& b)
-    {
-        return (a.profit < b.profit);
-    }
-};
 
 class Solution 
 {
     public:
-    //Function to find the maximum profit and the number of jobs done.
+    static bool comp(Job a , Job b){
+        return a.profit > b.profit;
+    }
     vector<int> JobScheduling(Job arr[], int n) 
     { 
-         vector<Job> result;
-    sort(arr, arr + n,
-         [](Job a, Job b) { return a.dead < b.dead; });
-    // set a custom priority queue
-    priority_queue<Job, vector<Job>, jobProfit> pq;
-    for (int i = n - 1; i >= 0; i--) {
-        int slot_available;
-        // we count the slots available between two jobs
-        if (i == 0) {
-            slot_available = arr[i].dead;
+         //sort with decreasing order of the profit
+         //so that we can choose mazmimum profit first
+         
+         sort(arr , arr+n ,comp);
+         
+         // now we need to maintain slots , weather we can do job at a particular slot
+         // or not
+         // for this we maintain a slot array and will try to o work at last time of 
+         // the slot , so that maximum jobs can ne done
+       
+        int mx = INT_MIN;
+        for(int i = 0 ; i < n ; i++){
+            mx = max(mx , arr[i].dead);
         }
-        else {
-            slot_available = arr[i].dead - arr[i - 1].dead;
+        
+        //initially all slots are empty
+        vector<bool>slots(mx+1 , false);
+        int c = 0 , pro = 0;
+        for(int i = 0 ; i < n ; i++){
+            
+            for(int j = arr[i].dead ; j > 0 ; j--){
+                
+                if(slots[j] == false){
+                    // slot is empty ,so we can do job in this slot
+                    
+                    c++;
+                    pro = pro + arr[i].profit;
+                    slots[j] = true;
+                    break;
+                }
+            }
         }
-        // include the profit of job(as priority),
-        // deadline and job_id in maxHeap
-        pq.push(arr[i]);
-        while (slot_available > 0 && pq.size() > 0) {
-            // get the job with the most profit
-            Job job = pq.top();
-            pq.pop();
-            // reduce the slots
-            slot_available--;
-            // add it to the answer
-            result.push_back(job);
-        }
-    }
-    // sort the result based on the deadline
-    sort(result.begin(), result.end(),
-         [&](Job a, Job b) { return a.dead < b.dead; });
-    // print the result
-    
-    vector<int>att;
-    int p = 0;
-    for (int i = 0; i < result.size(); i++)
-         p = p + result[i].profit;
-           
- att.push_back(result.size());
-    att.push_back(p);
-    return att;
+        vector<int>ans;
+        ans.push_back(c);
+        ans.push_back(pro);
+        return ans;
     } 
-  
 };
 
 // { Driver Code Starts.
