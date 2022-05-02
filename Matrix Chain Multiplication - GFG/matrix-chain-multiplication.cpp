@@ -7,6 +7,11 @@ using namespace std;
  // } Driver Code Ends
 // User function Template for C++
 
+// Time Complexity - O(n3)
+//Space Complexity - O(n2)
+
+
+// Time Complexity - O(2^n)
 class Solution{
 public:
     // 5   0 1 2 3 4
@@ -37,10 +42,31 @@ public:
         }
         return dp[1][n-1];
     }
+    
+int recmemo(vector<vector<int>>&dp , int arr[] , int s , int e){
+        
+    
+        if(s == e || s +1 == e){
+            return 0;
+        }
+        
+        if(dp[s][e] != -1){
+            return dp[s][e];
+        }
+        
+        int ans = INT_MAX;
+        for(int i = s+1 ; i < e ; i++){
+            int left = recmemo(dp,arr , s , i);
+            int right = recmemo(dp,arr , i , e);
+            int cost = left+right+arr[s]*arr[i]*arr[e];
+            ans = min(ans , cost);
+        }
+        return dp[s][e] = ans;
+    }
     int matrixMultiplication(int N, int arr[])
     {
         vector<vector<int>>dp(N+1 , vector<int>(N+1 , -1));
-       return dpp( arr , N);
+       return recmemo( dp,arr ,0, N-1);
     }
 };
 
