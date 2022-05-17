@@ -47,10 +47,27 @@ public:
         TreeNode*ans2 = find(root->right , target);
             return ans2;
     }
-    
-    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
-        int c = search(original , target);
+    TreeNode* get(TreeNode* root1 , TreeNode* root2 , TreeNode* target){
         
-       return find(cloned , c);
+        if(root1 == NULL){
+            return NULL;
+        }
+        
+        if(root1 == target){
+            return root2;
+        }
+        
+       TreeNode*ans1 =  get(root1->left , root2->left , target);
+       if(ans1 != NULL){
+           return ans1;
+       }
+        
+        TreeNode*ans2 = get(root1->right , root2->right , target);
+        return ans2;
+    }
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        // int c = search(original , target);
+       // return find(cloned , c);
+    return get(original , cloned , target);
     }
 };
