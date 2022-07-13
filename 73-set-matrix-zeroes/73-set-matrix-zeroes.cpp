@@ -1,51 +1,115 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        
-        int m = matrix.size();
-        int n = matrix[0].size();
-        
-        if(m == n && ( m == 0 || m == 1)){
-            return;
-        }
-        
-        vector<bool>row(m , false);
-        vector<bool>column(n , false);
-        
+    //3 Approaches
+    // BRUTE FORCE 
+    // TC - O(M*N*(M+N))
+    // SC - O(M*N)
+    
+    // BETTER SOLUTION
+    // Time Complexity - O(m*n)
+    // Space Complexity - O(m+n)
+    
+    
+     void setZeroes(vector<vector<int>>& matrix) {
+         
+           int m = matrix.size();
+           int n = matrix[0].size();
+       bool rows = false , column = false;
+         
+         for(int i = 0 ; i  < m ; i++){
+             if(matrix[i][0] == 0){
+                 rows = true;
+                 break;
+             }
+         }
+         
+         for(int i = 0 ; i < n ; i++){
+             if(matrix[0][i] == 0){
+                 column = true;
+                 break;
+             }
+         }
+         
         for(int i = 0 ; i < m ; i++){
-            
-            for(int j  = 0 ; j < n ; j++){
-                
-                if(matrix[i][j] == 0){
-                    row[i] = true;
-                    column[j] = true;
-                }
-            }
-        }
-        
-        for(int i = 0 ; i <  m; i++){
             for(int j = 0 ; j < n ; j++){
                 
-                if(row[i] == true || column[j] == true){
-                    
-                     matrix[i][j] = 0;
-                }
+                 
+                 if(matrix[i][j] == 0){
+                     
+                      matrix[i][0] = 0;
+                      matrix[0][j] = 0;
+                 }
             }
         }
         
-        for(int i = 0 ; i < m ; i++){
-            cout<<row[i]<<" ";
+        for(int i = 1 ; i < m ; i++){
+            
+            for(int j = 1  ; j < n ; j++){
+                
+          
+                 if(matrix[i][0] == 0 || matrix[0][j] == 0){
+                     
+                     matrix[i][j] = 0;
+                 }
+            }
         }
-        cout<<endl;
+         
+         for(int i = 0 ; i < m ; i++){
+              if(rows == true){
+                  matrix[i][0] = 0;
+              }
+         }
+         
          for(int i = 0 ; i < n ; i++){
-            cout<<column[i]<<" ";
-        }
-    }
+             
+             if(column == true){
+                 matrix[0][i] = 0;
+             }
+         }
+        
+     } 
+         
+         
+    // BETTER SOLUTION
+//     void setZeroes(vector<vector<int>>& matrix) {
+        
+//         int m = matrix.size();
+//         int n = matrix[0].size();
+        
+//         if(m == n && ( m == 0 || m == 1)){
+//             return;
+//         }
+        
+//         vector<bool>row(m , false);
+//         vector<bool>column(n , false);
+        
+//         for(int i = 0 ; i < m ; i++){
+            
+//             for(int j  = 0 ; j < n ; j++){
+                
+//                 if(matrix[i][j] == 0){
+//                     row[i] = true;
+//                     column[j] = true;
+//                 }
+//             }
+//         }
+        
+//         for(int i = 0 ; i <  m; i++){
+//             for(int j = 0 ; j < n ; j++){
+                
+//                 if(row[i] == true || column[j] == true){
+                    
+//                      matrix[i][j] = 0;
+//                 }
+//             }
+//         }
+       
+//     }
 };
 
 
 
-
+// BRUTE FORCE SOLUTION
 // class Solution {
 // public:
 //     void setZeroes(vector<vector<int>>& matrix) {
