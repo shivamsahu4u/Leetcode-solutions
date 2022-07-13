@@ -9,6 +9,12 @@ public:
     // Time Complexity - O(m*n)
     // Space Complexity - O(m+n)
     
+    // BEST Complexity 
+    // TC - O(M*N)
+    // SC - O(1)
+    // Tips : Use first row and column to mark weather that whole row or column will be zero or not , and for first r and c , we can have two variables
+    
+    // we cant use same row and column for 0th row ad column as it will take other rows also zeros that doest actaully contain zeros
     
      void setZeroes(vector<vector<int>>& matrix) {
          
