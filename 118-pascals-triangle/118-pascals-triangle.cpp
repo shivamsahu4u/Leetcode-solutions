@@ -1,5 +1,28 @@
 class Solution {
 public:
+        int find(int n , int r){
+             int res = 1;
+            for(int i = 0 ; i < r ; i++){
+                res = res * (n-i);
+                res = res/ (i+1);
+            }
+            return res;
+        }
+        vector<vector<int>> generate(int numRows) {
+             
+             vector<vector<int>>ans(numRows);
+            
+            for(int i = 0 ; i < numRows ; i++){
+                
+                for(int j = 0 ; j < i+1 ; j++){
+                    
+                     ans[i].push_back(find(i,j));
+                }
+            }
+            return ans;
+              
+        }
+    
     
     // Brute Force 
     // TC - O(numRows * numRows)
@@ -8,7 +31,7 @@ public:
     // Better Solution
     // TC - O(numRows * numRows)
     // SC - O(1)
-    vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> generat(int numRows) {
                     // 4 4
         //int matrix[30][30] = {0};
         vector<vector<int>>ans(numRows , vector<int>(numRows));
