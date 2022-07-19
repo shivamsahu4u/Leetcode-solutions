@@ -1,5 +1,8 @@
 class Solution {
 public:
+    // O(1) Time 
+    // It works constant while working with whole code
+    
         int find(int n , int r){
              int res = 1;
             for(int i = 0 ; i < r ; i++){
@@ -29,6 +32,10 @@ public:
     // SC - O(numRows * numRows)
     
     // Better Solution
+    // TC - O(numRows * numRows)
+    // SC - O(numRows * numRows)
+    
+    // Best Solution
     // TC - O(numRows * numRows)
     // SC - O(1)
     vector<vector<int>> generat(int numRows) {
