@@ -7,26 +7,26 @@ public:
          string s = to_string(n);
          reverse(s.begin() , s.end());
          int ans = stoi(s);
-        return ans;
+         return ans;
     }
     int countNicePairs(vector<int>& nums) {
-        // cout<<no(1)<<endl;
-        unordered_map<int,long long >hash;
-        cout<<nums.size()<<endl;
+      
+        unordered_map<int,long long  >hash;
+        
         for(int i = 0 ; i < nums.size(); i++){
             hash[nums[i] - no(nums[i])]++;
-            // cout<<nums[i]- no(nums[i])<<" ";
-        }cout<<endl;
-        long long  c = 0;
+        }
+        
+        long long c = 0;
         for(auto it : hash){
-         // cout<<""
             c = c + (it.second*(it.second-1))/2;
-            cout<<endl<<it.second<<": ";
         }
         return c % h; 
     }
 };
 
+// Time Com - O(n)
+// Space Com - o(N)
 // You are given an array nums that consists of non-negative integers. Let us define rev(x) as the reverse of the non-negative integer x. For example, rev(123) = 321, and rev(120) = 21. A pair of indices (i, j) is nice if it satisfies all of the following conditions:
 
 // 0 <= i < j < nums.length
