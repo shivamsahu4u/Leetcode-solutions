@@ -15,12 +15,9 @@ public:
                 count++;
             }
         }
-     // if(count == -1)return v;
-        // 1 2 3 4 3
+  
         swap(nums[count] , nums[v]);
-         // 1 2 3 3 4
-        //        |
-        
+       
         int i = u , j= count + 1;
         
         while(i < count && j <= v){
@@ -39,10 +36,7 @@ public:
                 j++;
             }
         }
-        // for(int i = u ; i <= v ; i++){
-        //     cout<<nums[i]<<" ";
-        // }
-        // cout<<count<<endl;
+      
         return count;
                   
     }
@@ -58,15 +52,11 @@ public:
         }
         
          if(k < par){
-             int ans =  quick(nums , u , par-1 , k);
-             if(ans != -1)
-             return ans;
+             return quick(nums , u , par-1 , k);
+            
          }else{
-             int ans = quick(nums , par+1 , v , k);
-              if(ans != -1)
-             return ans;
+             return quick(nums , par+1 , v , k);
          }
-        
         return -1;
     }
     int findKthLargest(vector<int>& nums, int k) {
@@ -86,6 +76,8 @@ public:
     // int findKthLargest(vector<int>& nums, int k) {
        
      // Method 2 : Priority Queue
+// Time C - O(k + nlogk)
+// Space C - O(k)
 //      priority_queue<int , vector<int> , greater<int>>pq;     
      
 //      for(int i = 0 ; i < k ; i++){
