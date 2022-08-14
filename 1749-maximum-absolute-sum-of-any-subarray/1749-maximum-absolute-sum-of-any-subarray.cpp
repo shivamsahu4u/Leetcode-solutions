@@ -7,31 +7,27 @@ public:
         int n = nums.size();
         
         int i  = 0;
-        int m = 0;
+        int m = 0 , t = 0;
         int ans = INT_MIN;
         while(i < n){
             
             m = m + nums[i];
-            
+            t = t + nums[i];
             ans = max(ans , m);
+            ans = max(abs(t) , ans);
             
             if(m < 0){
                 m = 0;
-            }i++;
-        }
-        m = 0;i=0;
-        while(i < n){
+            }
             
-            m = m + nums[i];
+            if(t > 0){
+                t = 0;
+            }
             
-            ans = max(abs(m) , ans);
-            
-            if(m > 0){
-                m = 0;
-            }i++;
+            i++;
         }
         
-        
+
         return ans;
     }
 };
