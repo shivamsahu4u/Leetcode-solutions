@@ -1,37 +1,36 @@
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
-      
-        // answer will either start from left or right
-        // answer can be negetive or postivie
-        // so lets say if answer lies in middle
-        // a ans b
-        // + ans + , + ans - , - ans + , - ans -
-    // -   left or right  , right , left , left or right
-    // +   left*right*mid , left * mid , mid * right , left*mid*right
         
-        int m = INT_MIN;
-        int ans = 1;
-        for(int i = 0 ; i < nums.size() ; i++){
+        // using kadane algorithm
+        
+        int m = 1;
+        int i = 0;
+        int n = nums.size();
+        int ans = INT_MIN;
+        while(i < n){
             
-            ans = ans*nums[i];
-            m = max(m ,ans);
+            m = m * nums[i];
+            ans = max(ans , m);
             
-            if(nums[i] == 0){
-                ans = 1;
+            if(m ==0){
+                m = 1;
             }
-        }
-        ans = 1;
-        for(int i = nums.size()-1 ; i >=0 ; i--){
-            
-            ans = ans*nums[i];
-            m = max(m ,ans);
-            
-            if(nums[i] == 0){
-                ans = 1;
-            }
+            i++;
         }
         
-        return m;
+        i = nums.size()-1;
+        m = 1;
+        while(i >= 0){
+            
+            m = m * nums[i];
+            ans = max(ans , m);
+            
+            if(m == 0){
+                m = 1;
+            }
+            i--;
+        }
+        return ans;
     }
 };
