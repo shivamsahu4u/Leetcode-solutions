@@ -22,6 +22,14 @@ public:
             
             ans = max({ans , dp1[i] , dp2[i]});
         }
+        
+        for(int i = 0 ; i < arr.size() ; i++)
+            cout<<dp1[i]<<" ";
+        cout<<endl;
+        for(int i = 0 ; i < arr.size() ; i++)
+            cout<<dp2[i]<<" ";
+        cout<<endl;
+            
         return ans;
         
     }
